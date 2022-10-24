@@ -49,6 +49,8 @@ while num > 1:
     if player1 > 28 or player1 < 1:
         while player1 > 28 or player1 < 1:
             player1 = int(input('Ходит первый игрок, введите ПРАВИЛЬНОЕ число от 1 до 28 :'))
+    num -= player1
+    total_player1 += player1
     check_win()
     if flag == True:
         num  = 100
@@ -58,8 +60,8 @@ while num > 1:
         player2 = 0
         total_player2 = 0
         print(f' Все конфеты достаются Player1  а это целых {num} конфет. Поздравляю!!!')
-    num -= player1
-    total_player1 += player1
+        
+    
     print(f'На столе конфет {num}, у первого игрока {total_player1} конфет, у второго игрока {total_player2} конфет')
     player2 = int(input('Ходит ВТОРОЙ игрок, введите число от 1 до 28 :'))
     if player2 > 28 or player2 < 1:
