@@ -1,83 +1,154 @@
-# Создайте программу для игры с конфетами человек против человека.
-
-# Условие задачи: На столе лежит 2021 конфета. Играют два игрока делая ход друг после друга. 
-# Первый ход определяется жеребьёвкой. За один ход можно забрать не более чем 28 конфет. 
+# Создайте программу для игры с конфетами человек против человека. 
+# Условие задачи: На столе лежит 2021 конфета. 
+# Играют два игрока делая ход друг после друга. Первый ход определяется жеребьёвкой. 
+# За один ход можно забрать не более чем 28 конфет. 
 # Все конфеты оппонента достаются сделавшему последний ход. 
 # Сколько конфет нужно взять первому игроку, чтобы забрать все конфеты у своего конкурента?
-
 # a) Добавьте игру против бота
+# б) Подумайте, как наделить бота "интеллектом"
 
-# b) Подумайте как наделить бота ""интеллектом""
-import random
 
-print ('Это программа, для игры в 2021 канфету. Все конфеты оппонента достаются сделавшему последний ход.')
-choosing_an_opponent = int(input('Введите цифру если \n1 - хотите сыграть с 2-ым человеком\n2 - если с ботом\n3 - если с интелектуальным ботом \n : '))
+from random import randint
 
-def find_opponent(x):
-    if x == 1:
-        game_1on1()
+def input_dat(name):
+    x = int(input(f"{name}, введите количество конфет, которое возьмете от 1 до 28: "))
+    while x < 1 or x > 28:
+        x = int(input(f"{name}, введите корректное количество конфет: "))
+    return x
 
-def game_1on1():
-    print('На столе лежит 2021 конфета. Играют два игрока делая ход друг после друга')
-    print('Первый ход определяется жеребьёвкой. За один ход можно забрать не более чем 28 конфет')
-    print('Все конфеты оппонента достаются сделавшему последний ход')
-    rand_opponent = random.randint(1, 2)
-    print(f'Первый ход делает игрок №{rand_opponent}')
-   
 
-def check_win ():
-    flag = False
-    if num == 0:
-        print(' Вы Выиграли, поздравляем!!!' )
-        flag = True
-        return flag
-        
-         
+def p_print(name, k, counter, value):
+    print(f"Ходил {name}, он взял {k}, теперь у него {counter}. Осталось на столе {value} конфет.")
 
-game_1on1()
-# def game (rand_opponent):
-#     print('')
-num  = 100
-player1 = 0
-total_player1 = 0
 
-player2 = 0
-total_player2 = 0
-while num > 1:
-    print(f'На столе конфет {num}, у первого игрока {total_player1} конфет, у второго игрока {total_player2} конфет')
-    player1 = int(input('Ходит первый игрок, введите число от 1 до 28 :'))
-    if player1 > 28 or player1 < 1:
-        while player1 > 28 or player1 < 1:
-            player1 = int(input('Ходит первый игрок, введите ПРАВИЛЬНОЕ число от 1 до 28 :'))
-    num -= player1
-    total_player1 += player1
-    check_win()
-    if flag == True:
-        num  = 100
-        player1 = 0
-        total_player1 = 0
 
-        player2 = 0
-        total_player2 = 0
-        print(f' Все конфеты достаются Player1  а это целых {num} конфет. Поздравляю!!!')
-        
-    
-    print(f'На столе конфет {num}, у первого игрока {total_player1} конфет, у второго игрока {total_player2} конфет')
-    player2 = int(input('Ходит ВТОРОЙ игрок, введите число от 1 до 28 :'))
-    if player2 > 28 or player2 < 1:
-        while player2 > 28 or player2 < 1:
-            player2 = int(input('Ходит ВТОРОЙ игрок, введите ПРАВИЛЬНОЕ число от 1 до 28 :'))
-    check_win()
-    if flag == True:
-        num  = 100
-        player1 = 0
-        total_player1 = 0
 
-        player2 = 0
-        total_player2 = 0
-        print(f' Все конфеты достаются Player2  а это целых {num} конфет. Поздравляю!!!')
-    num -= player1
-    total_player1 += player1
-    num -= player2
-    total_player2 += player2
-    
+
+
+
+def game1on1():
+    player1 = input("Введите имя первого игрока: ")
+    player2 = input("Введите имя второго игрока: ")
+    value = int(input("Введите количество конфет на столе: "))
+    flag = randint(0,2) # флаг очередности
+    if flag:
+        print(f"Первый ходит {player1}")
+    else:
+        print(f"Первый ходит {player2}")
+
+    counter1 = 0 
+    counter2 = 0
+
+    while value > 28:
+        if flag:
+            k = input_dat(player1)
+            counter1 += k
+            value -= k
+            flag = False
+            p_print(player1, k, counter1, value)
+        else:
+            k = input_dat(player2)
+            counter2 += k
+            value -= k
+            flag = True
+            p_print(player2, k, counter2, value)
+
+    if flag:
+        print(f"Выиграл {player1}")
+    else:
+        print(f"Выиграл {player2}")
+
+
+
+
+
+def game_bot():
+    player1 = input("Введите имя игрока: ")
+    player2 = "Гай" 
+    print("Привет меня зовут бот Гай я сыграю с тобой ")
+    value = int(input("Введите количество конфет на столе: "))
+    flag = randint(0,2) # флаг очередности
+    if flag:
+        print(f"Первый ходит {player1}")
+    else:
+        print(f"Первый ходит {player2}")
+
+    counter1 = 0 
+    counter2 = 0
+
+    while value > 28:
+        if flag:
+            k = input_dat(player1)
+            counter1 += k
+            value -= k
+            flag = False
+            p_print(player1, k, counter1, value)
+        else:
+            k = randint(1,28)
+            counter2 += k
+            value -= k
+            flag = True
+            p_print(player2, k, counter2, value)
+
+    if flag:
+        print(f"Выиграл {player1}")
+    else:
+        print(f"Выиграл {player2}")
+
+
+
+def game_inteleckt_bot():
+    player1 = input("Как тебя зовут?: ")
+    player2 = 'Эйнштейн' 
+    print(f'Привет {player1} меня зовут бот Эйнштейн и я умею играть :) ')
+    value = int(input("Введите количество конфет на столе: "))
+    flag = randint(0,2) # флаг очередности
+    if flag:
+        print(f"Первый ходит {player1}")
+    else:
+        print(f"Первый ходит {player2}")
+
+    counter1 = 0 
+    counter2 = 0
+
+    while value > 28:
+        if flag:
+            k = input_dat(player1)
+            b = k
+            counter1 += k
+            value -= k
+            flag = False
+            p_print(player1, k, counter1, value)
+        else:
+            
+            if value < 29:
+                k = value
+            else:
+                delenie = value//28
+                k = value - ((delenie*28)+1)
+                if k == -1:
+                    k = 28 -1
+                if k == 0:
+                    k = 28
+            while k > 28 or k < 1:
+                k = randint(1,28)
+            
+            counter2 += k
+            value -= k
+            flag = True
+            p_print(player2, k, counter2, value)
+
+    if flag:
+        print(f"Выиграл {player1}")
+    else:
+        print(f"Выиграл {player2}")
+
+
+who_game = int(input('Введите цифру если \n1 - хотите сыграть с 2-ым человеком\n2 - с ботом\n3 - с интелектуальным ботом \n : '))
+
+if who_game == 1:
+    game1on1()
+if who_game == 2:
+    game_bot()
+else:
+    game_inteleckt_bot()
